@@ -1,38 +1,79 @@
-.App {
-  text-align: center;
+:root{
+  --yellow:#fdcd3e;
+  --orange : rgba(255, 180, 95);
+  --darkOrange : rgb(248, 159, 58);
+  --skyblue:#8ed9f6;
+  --gray:rgba(36,45,73,0.45);
+  --shadow:1px 6px 10px rgba(26, 26, 26, 0.2);
+  --inputShadow: 0px 1px 1px rgba(0,0,0,0.25);
+  --cardColor:rgba(255,255,255,0.64);
+  --buttonBg:linear-gradient(98.63deg, #f9a225 0%, #f95f35 100%);
+  --inputColor:rgba(40,52,62,0.07);
+  --photo:#4cb256;
+  --video:#4a4eb7;
+  --location:#ef5757;
+  --shedule:#e1ae4a;
+  --mainColor:linear-gradient(130.63deg, #ffb45f, #8ed9f6 100%);
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body{
+  font-family: 'Poppins', sans-serif;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+a{
+text-decoration: none;
+color: black;
+}
+
+li{
+  text-decoration: none;
+  list-style: none;
+}
+
+button{
+ border: none; 
+}
+.home,
+.services,
+.products,
+.sign-up {
   display: flex;
-  flex-direction: column;
+  height: 90vh;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: 3rem;
 }
 
-.App-link {
-  color: #61dafb;
+.services {
+  background-image: url('/public/images/img-2.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-size: 100px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.products {
+  background-image: url('/public/images/img-1.jpg');
+  background-position: center;
+  background-size: fill;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-size: 100px;
+}
+
+.sign-up {
+  background-image: url('/public/images/img-8.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-size: 100px;
 }
