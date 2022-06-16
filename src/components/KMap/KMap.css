@@ -1,0 +1,38 @@
+.iwContent__wrap{
+  width: 420px;
+  height: 230px;
+  padding: 20px;
+  position: relative;
+  overflow: auto;
+  /* border-radius: 10px; */
+}
+
+.iwContent__info{
+  position: absolute;
+  width: 380px;
+  height: 190px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* border: 1px solid red; */
+
+}
+.iwContent__desc{
+  display: flex;
+  flex-direction:column ;
+  gap: 2px;
+
+}
+
+.iwContent__title{
+  background:var(--yellow);
+  color: white;
+  border-radius:5px;
+  padding: 2px;
+  padding-left:5px ;
+}
+
+.iwContent__ellipsis,
+.iwContent__link{
+  font-size: 13px;
+}
