@@ -1,3 +1,8 @@
+.navbar__fragment{
+  display: flex;
+  flex-direction: column;
+}
+
 .navbar{
   position: fixed;
   width: 100%;
