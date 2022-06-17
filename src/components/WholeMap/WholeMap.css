@@ -1,6 +1,6 @@
 .WholeMap{
   /* background-image: url("/public/images/img-2.jpg"); */
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.6);
   padding-top: 40px;
   overflow: hidden;
 }
@@ -13,8 +13,12 @@
   max-width: 1100px;
   transform: translateY(30px);
   animation: mapFlooting 1s ease forwards;
+
 }
 
+.wholeMap__img{
+  filter: drop-shadow(5px 5px 5px #000);
+}
 .seoul{
   position: absolute;
   top: 220px;
@@ -133,6 +137,8 @@
   width: 100%;
   display: flex;
   justify-content: center;
+
+  /* background-color: #000; */
 }
 
 .local__modal__span{
@@ -143,12 +149,14 @@
   position: relative;
   background-size: cover;
   overflow: hidden;
+  
 }
 
 .local__modal__img img{
 width: 520px;
 height: 350px;
 transition: .5s;
+
 }
 
 .local__modal__img img:hover{
