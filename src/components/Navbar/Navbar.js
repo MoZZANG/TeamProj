@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { Outlet } from "react-router-dom";
-const Navbar = ({ scrollNav }) => {
+const Navbar = ({ scrollNav, whereUrl }) => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMoblieMenu = () => setClick(false);
   let navigate = useNavigate();
+
   return (
-    <>
-      <nav className={scrollNav ? "navbar scrollActive" : "navbar"}>
+    <div className="navbar__fragment">
+      <nav className={scrollNav || whereUrl ? "navbar scrollActive" : "navbar"}>
         <div className="navbar-container">
           <div className="navbar-logo">
             <Link to="/">
@@ -63,7 +64,7 @@ const Navbar = ({ scrollNav }) => {
         </div>
       </nav>
       <Outlet />
-    </>
+    </div>
   );
 };
 
