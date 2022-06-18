@@ -4,17 +4,30 @@
   justify-content: center;
   align-items: center;
   box-shadow:var(--shadow) ;
-}
 
+}
+.dateRangePicker__btn-container{
+  display: flex;
+margin-left: auto;
+}
+.dateRangePicker__closeBtn,
 .dateRangePicker__acceptBtn{
   /* margin-left:100px ; */
   padding: 5px 10px;
   border-radius: 5px;
-  box-shadow:var(--shadow) ;
-  border: 2px solid var(--orange);
+  box-shadow:0px 2px 5px rgba(26, 26, 26, 0.2);
+  border: 1px solid var(--orange);
   margin-left:auto ;
   margin-right: 10px;
   margin-bottom: 10px;
   cursor: pointer;
   font-weight: 500;
+}
+
+.dateRangePicker__closeBtn:hover,
+.dateRangePicker__acceptBtn:hover{
+  border: none;
+  background:var(--mainColor) ;
+  color: white;
+  box-shadow: var(--shadow);
 }

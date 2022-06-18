@@ -1,69 +1,11 @@
 import React from "react";
+import Search from "../Search/Search";
 import "./RightRecommandSide.css";
 const RightRecommandSide = () => {
   return (
     <div className="RightRecommandSide">
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
-      <div>RightRecommandSide</div>
+      <Search />
+      <SearchedLocation />
     </div>
   );
 };

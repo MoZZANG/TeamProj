@@ -2,8 +2,7 @@
   display: grid;
   grid-template-columns: 23rem auto 23rem;
   /* border: 2px red solid; */
-  overflow: hidden;
   position: relative;
   height: 949px;
-  margin-top: 90px;
+  margin-top: 88px;
 }

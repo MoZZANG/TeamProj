@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { Routes, Route, useLocation } from "react-router-dom";

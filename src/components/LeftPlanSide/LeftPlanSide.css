@@ -3,3 +3,42 @@
   height: 100vh;
   overflow: auto;
 }
+
+.leftPlanSide__localNDay{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 0;
+}
+.leftPlanSide__localNDay h2:first-child{
+ font-weight: bold;
+ font-size: 1.5rem;
+}
+
+.leftPlanSide__localNDay p{
+color: grey;
+}
+
+.leftPlanSide__localNDay__how-many-day{
+  font-weight: bold;
+  font-size: 27px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+ }
+
+.changeDate__container{
+  position: relative;
+  font-size: 23px;
+  color:rgba(0, 0, 0, 0.8)
+}
+
+.dataRangePicker__container{
+background: white;
+  position: absolute;
+  z-index: 1000;
+  display: flex;
+}
+
+.changeDate__container:hover{
+  cursor: pointer;
+}

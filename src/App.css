@@ -37,8 +37,15 @@ li{
   list-style: none;
 }
 
+input{
+  border: none;
+  outline: none;
+}
+
 button{
  border: none; 
+ background:none;
+
 }
 .home,
 .services,

@@ -5,9 +5,16 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import ko from "date-fns/locale/ko";
 import "./DateRangePicker.css";
-const DateRangePick = ({ setDays, setPeriod, setApply }) => {
-  let reff = useRef();
-
+const DateRangePick = ({
+  setDays,
+  setPeriod,
+  savePeriod,
+  setSavePeriod,
+  saveDays,
+  setSaveDays,
+  appearCalendar,
+  setAppearCalendar,
+}) => {
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -22,11 +29,10 @@ const DateRangePick = ({ setDays, setPeriod, setApply }) => {
         <div>
           <DateRange
             id="calID"
-            // ref={reff}
             editableDateInputs={true}
             onChange={(item) => {
               setState([item.selection]);
-              setDays(
+              setSaveDays(
                 (Date.parse(item.selection.endDate) -
                   Date.parse(item.selection.startDate)) /
                   1000 /
@@ -34,23 +40,33 @@ const DateRangePick = ({ setDays, setPeriod, setApply }) => {
                   60 /
                   24
               );
-              setPeriod(item.selection);
+              setSavePeriod(item.selection);
             }}
             moveRangeOnFirstSelection={false}
             ranges={state}
             months={2}
-            direction="vertical"
+            direction="horizontal"
             locale={ko}
             minDate={addDays(new Date(), 0)}
             showDateDisplay={true}
           />
         </div>
-        <div
-          className="dateRangePicker__acceptBtn"
-          onClick={() => {
-            setApply(true);
-          }}>
-          적용하기
+        <div className="dateRangePicker__btn-container">
+          <div
+            className="dateRangePicker__closeBtn"
+            onClick={() => {
+              setAppearCalendar(!appearCalendar);
+            }}>
+            닫기
+          </div>
+          <div
+            className="dateRangePicker__acceptBtn"
+            onClick={() => {
+              setPeriod(savePeriod);
+              setDays(saveDays);
+            }}>
+            적용하기
+          </div>
         </div>
       </div>
     </>
