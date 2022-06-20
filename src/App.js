@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import WholeMap from "./components/WholeMap/WholeMap";
 import MainPage from "./components/MainPage/MainPage";
 import Login from "./components/Login/Login";
+import Test from "./Test";
 
 function App() {
   let location = useLocation();
@@ -16,11 +17,12 @@ function App() {
   const [scrollNav, setScrollNav] = useState(false);
   const [whereUrl, setWhereUrl] = useState(false);
 
-  const HandleScroll = () => {
+  const handleScroll = () => {
     if (window.scrollY > 990 && window.scrollY < 1780) setScrollNav(true);
     else setScrollNav(false);
   };
-  window.addEventListener("scroll", HandleScroll);
+
+  window.addEventListener("scroll", handleScroll);
 
   return (
     <div>
@@ -31,6 +33,7 @@ function App() {
           <Route path="/mainPage/:currPosition" element={<MainPage />}></Route>
         </Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/test" element={<Test />}></Route>
       </Routes>
     </div>
   );
@@ -38,5 +41,6 @@ function App() {
 
 function changeLocation(location, setWhereUrl) {
   if (location.pathname.indexOf("mainPage") === 1) setWhereUrl(true);
+  else setWhereUrl(false);
 }
 export default App;
