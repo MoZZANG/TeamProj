@@ -41,6 +41,7 @@ const DateRangePick = ({
                   24
               );
               setSavePeriod(item.selection);
+              console.log("item : ", item);
             }}
             moveRangeOnFirstSelection={false}
             ranges={state}
