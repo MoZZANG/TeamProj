@@ -1,13 +1,17 @@
 import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./PopularLocation.css";
+import { changeLnfM } from "../../store";
+import { useDispatch } from "react-redux";
 const PopularLocation = () => {
   let localRef = useRef("");
   let navigate = useNavigate();
+  let dispatch = useDispatch();
   return (
     <li
       className="PopularLocation__li"
       onClick={() => {
+        dispatch(changeLnfM(localRef.current.textContent));
         navigate("/mainPage/" + localRef.current.textContent);
       }}>
       <div>
