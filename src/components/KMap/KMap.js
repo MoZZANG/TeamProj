@@ -1,16 +1,21 @@
 import "./KMap.css";
 import React, { useEffect, useState } from "react";
-
+import { useSelector } from "react-redux/es/exports";
 import "./KMap.css";
 const { kakao } = window;
 
 const KMap = ({ currPosition }) => {
-  let lat = null;
-  let lng = null;
+  let [lat, setLat] = useState("");
+  let [lng, setLng] = useState("");
+  //searchedLacation클릭시 해당 장소이름으로 redux state변경하기 위함
+  let reduxState = useSelector((state) => {
+    return state;
+  });
+
   //위치정보 얻음을 성공했을 시
   // function onGeoOk(position) {
-  //   lat = position.coords.latitude;
-  //   lng = position.coords.longitude;
+  // lat = position.coords.latitude;
+  // lng = position.coords.longitude;
   // }
   // function onGeoFail() {
   //   alert("위치권한을 허용해주세요");
@@ -28,18 +33,19 @@ const KMap = ({ currPosition }) => {
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
     var geocoder = new kakao.maps.services.Geocoder();
-
     // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(currPosition, function (result, status) {
+    geocoder.addressSearch(reduxState.localNameForMarker, (result, status) => {
       // 정상적으로 검색이 완료됐으면
-      if (status === kakao.maps.services.Status.OK) {
+      if (1 == 1) {
         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        lat = result[0].y;
-        lng = result[0].x;
+        setLat(result[0].y);
+        setLng(result[0].x);
+
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         map.setCenter(coords);
       }
     });
+
     // 마커가 표시될 위치입니다
     var markerPosition = new kakao.maps.LatLng(lat, lng);
 
@@ -78,7 +84,7 @@ const KMap = ({ currPosition }) => {
     kakao.maps.event.addListener(marker, "click", function () {
       infowindow.open(map, marker);
     });
-  }, []);
+  }, [lat, lng, reduxState]);
 
   return (
     <div>
