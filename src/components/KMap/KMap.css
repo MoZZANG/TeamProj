@@ -1,6 +1,6 @@
 .iwContent__wrap{
-  width: 420px;
-  height: 230px;
+  width: 400px;
+  height: 200px;
   padding: 20px;
   position: relative;
   overflow: auto;
@@ -9,8 +9,8 @@
 
 .iwContent__info{
   position: absolute;
-  width: 380px;
-  height: 190px;
+  width: 90%;
+  height: auto;
   display: flex;
   flex-direction: column;
   gap: 1rem;
