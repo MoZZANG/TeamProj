@@ -1,8 +1,23 @@
 .MainPage{
+  width: 100%;
+  height: 100vh;
   display: grid;
-  grid-template-columns: 23rem auto 23rem;
-  /* border: 2px red solid; */
-  position: relative;
-  height: 949px;
-  margin-top: 88px;
+  grid-template-columns: 300px auto 300px;
+  /* border: 2px solid green; */
+  /* position: relative; */
+  margin-top: 80px;
+  /* padding-top:80px ; */
+  overflow: hidden;
+}
+
+/* ::-webkit-scrollbar{
+  display: none;
+} */
+
+.MainPage {
+  -ms-overflow-style: none;
+}
+
+.MainPage::-webkit-scrollbar {
+  display: none;
 }
