@@ -1,0 +1,9 @@
+.planTripTime__container{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid red;
+  font-size: 13px;
+  padding: 10px;
+}
