@@ -10,7 +10,14 @@ const Navbar = ({ scrollNav, whereUrl }) => {
 
   return (
     <div className="navbar__fragment">
-      <nav className={scrollNav || whereUrl ? "navbar scrollActive" : "navbar"}>
+      <nav
+        className={
+          scrollNav
+            ? "navbar scrollActive"
+            : whereUrl
+            ? "navbar whereUrlActive "
+            : "navbar"
+        }>
         <div className="navbar-container">
           <div className="navbar-logo">
             <Link to="/">
