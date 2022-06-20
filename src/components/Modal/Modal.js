@@ -27,7 +27,7 @@ const Overlay = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 const Contents = styled.div`
@@ -40,8 +40,7 @@ const Contents = styled.div`
   text-align: center;
   width: 25%;
   height: 700px;
-  transition: 0.5s;
-  animation: ${modalAni} 0.4s ease forwards;
+  animation: ${modalAni} 0.6s ease forwards;
 `;
 
 const Title = styled.div`
