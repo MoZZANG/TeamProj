@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
 
 const Login = () => {
   const handleSubmit = (event) => {
@@ -112,6 +113,42 @@ function Copyright(props) {
     </Typography>
   );
 }
+
+// function loginTest() {
+//   axios
+//     .post("/api/aamurest/authenticate", {
+//       "username": "KIM",
+//       "password": "1234"
+//     })
+//     .then((resp) => {
+//       console.log("post 성공");
+//       console.log(resp.data);
+//       sessionStorage.setItem('token',resp.data.token)
+
+//     })
+//     .catch((error) => {
+//       console.log("error : ", error);
+//     })
+//     .then(() => {
+//       console.log("로그인요청됨");
+//     });
+// }
+// function helloTest() {
+//   axios
+//     .get("/api/aamurest/Hello", {headers: {"Authorization" : `Bearer ${sessionStorage.getItem('token')}`}
+//     })
+//     .then((resp) => {
+//       console.log("get 성공");
+//       console.log(resp.data);
+//       // sessionStorage.setItem('token',resp.data.token
+//     })
+//     .catch((error) => {
+//       console.log("error : ", error);
+//     })
+//     .then(() => {
+//       console.log("hello요청됨");
+//     });
+// }
 
 const theme = createTheme();
 export default Login;
