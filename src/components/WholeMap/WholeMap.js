@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./WholeMap.css";
 import WholeMapCoords from "./WholeMapCoords.js";
-// import WholeMapLocalName from "./WholeMapLocalName.js";
 import WholeMapLocalData from "./WholeMapLocalData.js";
 import {
   Container,
@@ -13,10 +12,14 @@ import {
 } from "../Modal/Modal.js";
 import PopularLocation from "../PopularLocation/PopularLocation";
 import { Link } from "react-router-dom";
+import { changeLnfM } from "../../store";
+import { useSelector ,useDispatch} from "react-redux";
 const WholeMap = () => {
   const [modalState, setModalState] = useState(false);
   const [localName, setLocalName] = useState("");
   const [localId, setLocalId] = useState("");
+  let reduxState = useSelector((state)=>{return state});
+  let dispatch = useDispatch();
   return (
     <div className="WholeMap">
       <div className="test__container">
@@ -35,6 +38,7 @@ const WholeMap = () => {
                 setModalState={setModalState}
                 setLocalName={setLocalName}
                 setLocalId={setLocalId}
+                dispatch={dispatch}
                 key={i}
               />
             );
@@ -52,6 +56,7 @@ const WholeMap = () => {
             setModalState={setModalState}
             localName={localName}
             localId={localId}
+            reduxState={reduxState}
           />
         ) : null}
       </div>
@@ -60,7 +65,7 @@ const WholeMap = () => {
 };
 
 //모달창
-function Modal({ setModalState, localName, localId }) {
+function Modal({ setModalState, localName, localId ,reduxState}) {
   return (
     <Container>
       <Overlay
@@ -103,6 +108,7 @@ function WholeMapLocalName({
   setModalState,
   setLocalName,
   setLocalId,
+  dispatch,
   data,
 }) {
   return (
@@ -113,6 +119,7 @@ function WholeMapLocalName({
         setLocalName(data.localName);
         setModalState(!modalState);
         setLocalId(data.id);
+        dispatch(changeLnfM(data.localName));
       }}>
       {data.localName}
     </span>
