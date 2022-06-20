@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./LeftPlanSide.css";
 import WholeMapLocalData from "../WholeMap/WholeMapLocalData.js";
 import DateRangePick from "../DateRangePicker/DateRangePicker2";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import PlanTripTime from "../PlanTripTime/PlanTripTime";
+
 const LeftPlanSide = ({ currPosition }) => {
   const [findcurrPositionId, setFindcurrPositionId] = useState("");
   const [saveDays, setSaveDays] = useState(0);
@@ -17,16 +20,20 @@ const LeftPlanSide = ({ currPosition }) => {
     endDate: new Date(),
     key: "selection",
   });
-
+  let reduxState = useSelector((state) => {
+    return state;
+  });
   useEffect(() => {
     //WholeMapLocalData.js에서 현재클릭해서 들어온 지역명과 같은 지역명 찾기
     let findId = WholeMapLocalData.find((data) => {
-      return data.localName == currPosition;
+      return data.localName == reduxState.localNameForMarker;
     });
     //그리고 그 지역명으로 setting해주기
     //WholeMapLocalData에는 한정된지역만 있으므로 api로 전체 지역명을 받아서 비교하자
     setFindcurrPositionId(findId.id);
+    setAppearCalendar(true);
   }, []);
+
   return (
     <div className="LeftPlanSide">
       <div className="leftPlanSide__localNDay">
@@ -57,6 +64,10 @@ const LeftPlanSide = ({ currPosition }) => {
           />
         ) : null}
       </div>
+      <div>
+        <PlanTripTime saveDays={saveDays} savePeriod={savePeriod} />
+      </div>
+
       <div>leftSide</div>
     </div>
   );
