@@ -1,9 +1,65 @@
 .planTripTime__container{
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  position: relative;
+  flex-direction: column;
   gap: 4px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   font-size: 13px;
   padding: 10px;
+  
+}
+
+.planTripTime__title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  border:2px solid var(--darkOrange);
+  transition: .1s;
+}
+
+.planTripTime__title:hover{
+  box-shadow: var(--shadow);
+}
+
+.planTripTime__modal__container{
+  display: flex;
+  flex-direction: column;
+  /* transition: all 1s ease-in; */
+  /* border: 1px solid green; */
+}
+
+.setTime__container{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px 10px;
+  gap: 1rem;
+  margin: 7px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: .1s;
+}
+
+.setTime__container:hover{
+  box-shadow: var(--shadow);
+}
+
+
+.setTime__contiainer-day{
+  padding: 2px 5px;
+  background: var(--yellow);
+  border-radius: 5px;
+  color: white;
+}
+
+.setTime__container-timeNMin{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  gap: .5rem;
+  /* margin-left: auto; */
 }
