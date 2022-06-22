@@ -64,11 +64,10 @@ const LeftPlanSide = ({ currPosition }) => {
           />
         ) : null}
       </div>
-      <div>
+      <div className="planTripTime__div">
         <PlanTripTime saveDays={saveDays} savePeriod={savePeriod} />
       </div>
-
-      <div>leftSide</div>
+      <div>선택목록</div>
     </div>
   );
 };
@@ -85,7 +84,6 @@ const ChangeDate = ({ period, appearCalendar, setAppearCalendar }) => {
     <div
       className="changeDate__container"
       onClick={() => {
-        console.log("asdf");
         setAppearCalendar(!appearCalendar);
       }}>{`${sdy}.${sdm + 1}.${sdd} ~ ${edy}.${edm + 1}.${edd}`}</div>
   );
