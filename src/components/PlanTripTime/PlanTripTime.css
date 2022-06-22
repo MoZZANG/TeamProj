@@ -24,11 +24,19 @@
   box-shadow: var(--shadow);
 }
 
-.planTripTime__modal__container{
+.planTripTime__modal{
   display: flex;
   flex-direction: column;
+  height: 0;
+  overflow: hidden;
+  transition: 1s;
+  /* transform: ; */
+}
+
+.pttm_open{
+  height: auto;
+  overflow: visible;
   /* transition: all 1s ease-in; */
-  /* border: 1px solid green; */
 }
 
 .setTime__container{
