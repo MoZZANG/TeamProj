@@ -12,7 +12,7 @@ import {
 } from "../Modal/localInfoModal.js";
 import { useSelector, useDispatch } from "react-redux";
 //redux에서 localNameForMarker(마커찍기위한 장소이름) 변경함수
-import { changeLnfM } from "../../store.js";
+import { changeLnfM } from "../../redux/local.js";
 const SearchedLocation = ({ local }) => {
   const [locaInfoModal, setLocaInfoModal] = useState(false);
   //redux test중...
