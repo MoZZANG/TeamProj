@@ -22,12 +22,13 @@ const DateRangePick = ({
       key: "selection",
     },
   ]);
-
+  let reff = useRef();
   return (
     <>
       <div className="dateRangePicker__container">
         <div>
           <DateRange
+            ref={reff}
             id="calID"
             editableDateInputs={true}
             onChange={(item) => {
@@ -41,7 +42,6 @@ const DateRangePick = ({
                   24
               );
               setSavePeriod(item.selection);
-              console.log("item : ", item);
             }}
             moveRangeOnFirstSelection={false}
             ranges={state}
@@ -65,6 +65,7 @@ const DateRangePick = ({
             onClick={() => {
               setPeriod(savePeriod);
               setDays(saveDays);
+              setAppearCalendar(!appearCalendar);
             }}>
             적용하기
           </div>
