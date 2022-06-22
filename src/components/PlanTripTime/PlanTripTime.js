@@ -28,21 +28,19 @@ const PlanTripTime = ({ saveDays, savePeriod }) => {
         <div
           className="planTripTime__title"
           onClick={() => {
-            setAppearTimeSet(!appearTimeSet);
-            if (appearTimeSet) reff.current.style.height = "100%";
-            else reff.current.style.height = 0;
+            // setAppearTimeSet(!appearTimeSet);
+            // if (appearTimeSet) reff.current.style.height = "100%";
+            // else reff.current.style.height = 0;
+            reff.current.classList.toggle("pttm_open");
           }}>
           <FontAwesomeIcon icon={faClock} />
           <p>여행시간 상세설정(총 {(saveDays + 1) * 12}시간)</p>
           <FontAwesomeIcon icon={appearTimeSet ? faAngleUp : faAngleDown} />
         </div>
-        <div className="planTripTime__modal__container">
-          <div className="planTripTime__modal" ref={reff}>
-            {appearTimeSet &&
-              period.map((val, index) => {
-                return <TimeSet index={index + 1} />;
-              })}
-          </div>
+        <div className="planTripTime__modal" ref={reff}>
+          {period.map((val, index) => {
+            return <TimeSet index={index + 1} />;
+          })}
         </div>
       </div>
     </>
@@ -50,7 +48,7 @@ const PlanTripTime = ({ saveDays, savePeriod }) => {
 };
 
 //여행시간 상세설정하는 부분
-function TimeSet({ index }) {
+const TimeSet = ({ index }) => {
   const [startTime, setStartTime] = useState(new Date("2022-01-01 10:00"));
   const [endTime, setEndTime] = useState(new Date("2020-01-01 10:00"));
   const [appear, setAppear] = useState(false);
@@ -118,7 +116,7 @@ function TimeSet({ index }) {
       )}
     </>
   );
-}
+};
 //getAm(오전)pm(오후)T(time)m(mins)
 function getAmpmTmStart(newValue, setStartTimeArray) {
   let array = [];
@@ -170,4 +168,4 @@ function getAmpmTmEnd(newValue, setendTimeArray) {
   setendTimeArray(array);
 }
 
-export default PlanTripTime;
+export { PlanTripTime, TimeSet };
