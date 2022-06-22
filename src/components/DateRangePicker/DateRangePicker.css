@@ -4,6 +4,10 @@
   justify-content: center;
   align-items: center;
   box-shadow:var(--shadow) ;
+  background: white;
+  position: absolute;
+  z-index: 1000;
+  display: flex;
 
 }
 .dateRangePicker__btn-container{
