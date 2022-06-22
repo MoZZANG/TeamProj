@@ -11,9 +11,11 @@ const Test = () => {
     alert("ok");
   }, []);
 
+  const api = "http://192.168.0.19:8080";
+
   function testAxios() {
     axios
-      .get("/api/rest/info")
+      .get("http://192.168.0.19:8080/rest/info2?areacode=1&contenttypeid=12")
       .then((response) => {
         console.log(response.data);
       })
@@ -25,17 +27,35 @@ const Test = () => {
       });
   }
 
+  function test() {
+    axios
+      .post("http://192.168.0.19:8080/rest/info2", {
+        areacode: "1",
+        contenttypeid: "12",
+      })
+      .then((resp) => {
+        console.log("post 성공");
+        console.log(resp.data);
+      })
+      .catch((error) => {
+        console.log("error : ", error);
+      })
+      .then(() => {
+        console.log("post요청됨");
+      });
+  }
+
   return (
     <div>
       test{id}
       <button
         style={{ background: "green", cursor: "pointer" }}
-        onClick={() => stateTest()}>
+        onClick={() => testAxios()}>
         test
       </button>
       <button
         style={{ background: "yellow", cursor: "pointer" }}
-        onClick={() => testAxios()}>
+        onClick={() => test()}>
         axiosTest
       </button>
     </div>
