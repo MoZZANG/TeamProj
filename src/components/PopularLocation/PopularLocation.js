@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./PopularLocation.css";
-import { changeLnfM } from "../../store";
+import { changeLnfM } from "../../redux/local";
 import { useDispatch } from "react-redux";
 const PopularLocation = () => {
   let localRef = useRef("");
