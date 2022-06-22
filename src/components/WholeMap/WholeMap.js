@@ -12,13 +12,15 @@ import {
 } from "../Modal/Modal.js";
 import PopularLocation from "../PopularLocation/PopularLocation";
 import { Link } from "react-router-dom";
-import { changeLnfM } from "../../store";
-import { useSelector ,useDispatch} from "react-redux";
+import { changeLnfM } from "../../redux/local";
+import { useSelector, useDispatch } from "react-redux";
 const WholeMap = () => {
   const [modalState, setModalState] = useState(false);
   const [localName, setLocalName] = useState("");
   const [localId, setLocalId] = useState("");
-  let reduxState = useSelector((state)=>{return state});
+  let reduxState = useSelector((state) => {
+    return state;
+  });
   let dispatch = useDispatch();
   return (
     <div className="WholeMap">
@@ -65,7 +67,7 @@ const WholeMap = () => {
 };
 
 //모달창
-function Modal({ setModalState, localName, localId ,reduxState}) {
+function Modal({ setModalState, localName, localId, reduxState }) {
   return (
     <Container>
       <Overlay
