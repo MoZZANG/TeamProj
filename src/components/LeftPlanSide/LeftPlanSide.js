@@ -3,7 +3,9 @@ import "./LeftPlanSide.css";
 import WholeMapLocalData from "../WholeMap/WholeMapLocalData.js";
 import DateRangePick from "../DateRangePicker/DateRangePicker2";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import PlanTripTime from "../PlanTripTime/PlanTripTime";
+import { PlanTripTime } from "../PlanTripTime/PlanTripTime";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const LeftPlanSide = ({ currPosition }) => {
   const [findcurrPositionId, setFindcurrPositionId] = useState("");
@@ -23,6 +25,10 @@ const LeftPlanSide = ({ currPosition }) => {
   let reduxState = useSelector((state) => {
     return state;
   });
+  const [whosModal, setWhosModal] = useState(false);
+  // let saveDaysArray = new Array(saveDays).fill(0);
+  // setSaveDaysArr(saveDaysArray);
+  // const [saveDaysArr, setSaveDaysArr] = useState([0]);
   useEffect(() => {
     //WholeMapLocalData.js에서 현재클릭해서 들어온 지역명과 같은 지역명 찾기
     let findId = WholeMapLocalData.find((data) => {
@@ -48,26 +54,47 @@ const LeftPlanSide = ({ currPosition }) => {
             appearCalendar={appearCalendar}
             setAppearCalendar={setAppearCalendar}
           />
+          <div className="dateRangePicker">
+            {appearCalendar ? (
+              <DateRangePick
+                setDays={setDays}
+                setPeriod={setPeriod}
+                savePeriod={savePeriod}
+                setSavePeriod={setSavePeriod}
+                saveDays={saveDays}
+                setSaveDays={setSaveDays}
+                appearCalendar={appearCalendar}
+                setAppearCalendar={setAppearCalendar}
+              />
+            ) : null}
+          </div>
         </div>
       </div>
-      <div className="dataRangePicker__container">
-        {appearCalendar ? (
-          <DateRangePick
-            setDays={setDays}
-            setPeriod={setPeriod}
-            savePeriod={savePeriod}
-            setSavePeriod={setSavePeriod}
-            saveDays={saveDays}
-            setSaveDays={setSaveDays}
-            appearCalendar={appearCalendar}
-            setAppearCalendar={setAppearCalendar}
-          />
-        ) : null}
-      </div>
+
       <div className="planTripTime__div">
         <PlanTripTime saveDays={saveDays} savePeriod={savePeriod} />
       </div>
-      <div>선택목록</div>
+
+      <h3 style={{ textAlign: "center", margin: "1rem 0" }}>선택목록</h3>
+      <div
+        className="leftPlanSide__pickLocal__type__container"
+        onClick={toggleBtn}>
+        <span
+          className="leftPlanSide__pickLocal__type-btn sukbak"
+          onClick={() => {
+            setWhosModal(true);
+          }}>
+          숙박
+        </span>
+        <span
+          className="leftPlanSide__pickLocal__type-btn jangso lps__type-btn-picked"
+          onClick={() => {
+            setWhosModal(false);
+          }}>
+          장소
+        </span>
+      </div>
+      {whosModal ? <SukSoMadal /> : <JangSoModal />}
     </div>
   );
 };
@@ -88,4 +115,62 @@ const ChangeDate = ({ period, appearCalendar, setAppearCalendar }) => {
       }}>{`${sdy}.${sdm + 1}.${sdd} ~ ${edy}.${edm + 1}.${edd}`}</div>
   );
 };
+
+function JangSoModal() {
+  return (
+    <div className="jangSoModal__container">
+      <div className="jangSoModal__counter__container">
+        <span className="jangSoModal__counter">0</span>
+        <span>(총0시간0분)</span>
+      </div>
+      <div className="jangSoModal__allDel-btn">장소전체삭제</div>
+      <div className="jangSoModal__desc">
+        <span>가고 싶은 장소들을 검색하여 추가해주세요</span>
+        <span> 설정하신 일자별 여행시간내에서</span>
+        <span> 하루 평균 최대 8개의 장소까지 선택 가능합니다</span>
+        <FontAwesomeIcon icon={faPlus} className="jangSoModal__plus-btn" />
+      </div>
+    </div>
+  );
+}
+
+function SukSoMadal({ index }) {
+  return (
+    <div className="suksoModal__container">
+      <div className="suksoModal__counter__container">
+        <span className="suksoModal__counter">0</span>
+      </div>
+      <div className="suksoModal__allDel-btn">숙소전체삭제</div>
+      <div className="suksoModal__desc">
+        <span>숙소는 일정의 시작 지점과 종료 지점으로 설정됩니다.</span>
+        <span> 마지막 날은 시작 지점으로만 설정됩니다.</span>
+      </div>
+      <SukSoSubModal index={index + 1} />;
+    </div>
+  );
+}
+
+function SukSoSubModal({ index }) {
+  return (
+    <div className="sukSoSubModal__container">
+      <div className="sukSoSubModal__dayBtn">DAY 1</div>
+      <div className="suksoModal__desc">
+        <span>일자버튼을 누르고 숙소를 추가하세요</span>
+        <FontAwesomeIcon icon={faPlus} className="sukSoSubModal__plus-btn" />
+      </div>
+    </div>
+  );
+}
+
+function toggleBtn(e) {
+  if (e.target.nodeName == "SPAN") {
+    if (e.target.classList.contains("sukbak")) {
+      e.target.nextElementSibling.classList.remove("lps__type-btn-picked");
+      e.target.classList.add("lps__type-btn-picked");
+    } else {
+      e.target.previousElementSibling.classList.remove("lps__type-btn-picked");
+      e.target.classList.add("lps__type-btn-picked");
+    }
+  }
+}
 export default LeftPlanSide;
