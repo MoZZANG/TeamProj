@@ -4,7 +4,7 @@
   height: 99vh;
   /* align-items: center; */
   position: relative;
-  padding: 0 5px;
+padding-top: 80px;
 }
 
 .leftPlanSide__localNDay{
@@ -39,6 +39,17 @@ color: grey;
   cursor: pointer;
 }
 
+.leftPlanSide__setting_detail_part{
+  height: auto;
+  overflow: auto;
+  padding: 0 5px;
+
+}
+.leftPlanSide__setting_detail_part::-webkit-scrollbar{
+ display: none;
+}
+
+
 .planTripTime__div{
   width: 100%;
 }
@@ -67,7 +78,7 @@ cursor: pointer;
 }
 
 .lps__type-btn-picked{
-  border-bottom: 3px solid var(--yellow);
+  border-bottom: 3px solid var(--orange);
   color: black;
 }
 
@@ -112,7 +123,7 @@ cursor: pointer;
 .suksoModal__counter,
 .jangSoModal__counter{
   font-size: 27px;
-  color: var(--darkOrange);
+  color: var(--orange);
 }
 
 .suksoModal__allDel-btn,
@@ -121,7 +132,7 @@ cursor: pointer;
   padding: 5px 0;
   width: 100%;
   text-align: center;
-  background-color: var(--skyblue);
+  background-color: var(--red);
   color: whitesmoke;
 }
 
