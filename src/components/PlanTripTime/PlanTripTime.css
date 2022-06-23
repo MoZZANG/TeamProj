@@ -16,7 +16,9 @@
   gap: .5rem;
   cursor: pointer;
   padding: 5px 10px;
-  border:2px solid var(--darkOrange);
+background-color: var(--orange);
+border-radius:5px ;
+  color: white;
   transition: .1s;
 }
 
@@ -58,9 +60,11 @@
 
 .setTime__contiainer-day{
   padding: 2px 5px;
-  background: var(--yellow);
+background-color: var(--skyblue);
   border-radius: 5px;
   color: white;
+  opacity: .5;
+
 }
 
 .setTime__container-timeNMin{
