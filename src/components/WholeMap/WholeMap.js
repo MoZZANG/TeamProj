@@ -12,7 +12,7 @@ import {
 } from "../Modal/Modal.js";
 import PopularLocation from "../PopularLocation/PopularLocation";
 import { Link } from "react-router-dom";
-import { changeLnfM } from "../../redux/local";
+import { changeLnfM } from "../../redux/store";
 import { useSelector, useDispatch } from "react-redux";
 const WholeMap = () => {
   const [modalState, setModalState] = useState(false);
