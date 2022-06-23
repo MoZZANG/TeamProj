@@ -1,17 +1,18 @@
 import "./KMap.css";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux/es/exports";
+import { useSelector, useDispatch } from "react-redux/es/exports";
 import "./KMap.css";
+import { changeInfo } from "../../redux/store";
 const { kakao } = window;
 
-const KMap = ({ currPosition }) => {
+const KMap = ({ currPosition, setTitleName }) => {
   let [lat, setLat] = useState("");
   let [lng, setLng] = useState("");
   //searchedLacation클릭시 해당 장소이름으로 redux state변경하기 위함
   let reduxState = useSelector((state) => {
     return state;
   });
-
+  let dispatch = useDispatch();
   //위치정보 얻음을 성공했을 시
   // function onGeoOk(position) {
   // lat = position.coords.latitude;
@@ -23,6 +24,7 @@ const KMap = ({ currPosition }) => {
   //사용자의 현재 위치 얻기
   // navigator.geolocation.getCurrentPosition(onGeoOk, onGeoFail);
   //처음 지도 그리기
+
   useEffect(() => {
     var mapContainer = document.getElementById("map"), // 지도를 표시할 div
       mapOption = {
@@ -31,21 +33,29 @@ const KMap = ({ currPosition }) => {
       };
 
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+    var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+      mapOption = {
+        center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
+        level: 10, // 지도의 확대 레벨
+      };
 
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
     var geocoder = new kakao.maps.services.Geocoder();
     // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(reduxState.localNameForMarker, (result, status) => {
-      // 정상적으로 검색이 완료됐으면
-      if (1 == 1) {
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        setLat(result[0].y);
-        setLng(result[0].x);
+    geocoder.addressSearch(
+      reduxState.localNameForMarker ?? currPosition,
+      (result, status) => {
+        // 정상적으로 검색이 완료됐으면
+        if (1 == 1) {
+          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+          setLat(result[0].y);
+          setLng(result[0].x);
 
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
+          // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+          map.setCenter(coords);
+        }
       }
-    });
-
+    );
     // 마커가 표시될 위치입니다
     var markerPosition = new kakao.maps.LatLng(lat, lng);
 
@@ -92,8 +102,25 @@ const KMap = ({ currPosition }) => {
         style={{
           width: "100%",
           display: "inline-block",
+          paddingTop: "75px",
         }}>
         <div id="map" style={{ width: "100%", height: "99vh" }}></div>
+        <div className="kmap__right-btn__container">
+          <div
+            onClick={() => {
+              setTitleName("추천숙소");
+              dispatch(changeInfo("추천숙소"));
+            }}>
+            추천숙소
+          </div>
+          <div
+            onClick={() => {
+              setTitleName("추천장소");
+              dispatch(changeInfo("추천장소"));
+            }}>
+            추천장소
+          </div>
+        </div>
       </div>
     </div>
   );
