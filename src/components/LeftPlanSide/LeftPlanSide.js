@@ -26,20 +26,16 @@ const LeftPlanSide = ({ currPosition }) => {
     return state;
   });
   const [whosModal, setWhosModal] = useState(false);
-  // let saveDaysArray = new Array(saveDays).fill(0);
-  // setSaveDaysArr(saveDaysArray);
-  // const [saveDaysArr, setSaveDaysArr] = useState([0]);
   useEffect(() => {
     //WholeMapLocalData.js에서 현재클릭해서 들어온 지역명과 같은 지역명 찾기
     let findId = WholeMapLocalData.find((data) => {
-      return data.localName == reduxState.localNameForMarker;
+      return data.localName === (reduxState.localNameForMarker ?? currPosition);
     });
     //그리고 그 지역명으로 setting해주기
     //WholeMapLocalData에는 한정된지역만 있으므로 api로 전체 지역명을 받아서 비교하자
     setFindcurrPositionId(findId.id);
     setAppearCalendar(true);
   }, []);
-
   return (
     <div className="LeftPlanSide">
       <div className="leftPlanSide__localNDay">
@@ -70,31 +66,32 @@ const LeftPlanSide = ({ currPosition }) => {
           </div>
         </div>
       </div>
+      <div className="leftPlanSide__setting_detail_part">
+        <div className="planTripTime__div">
+          <PlanTripTime saveDays={saveDays} savePeriod={savePeriod} />
+        </div>
 
-      <div className="planTripTime__div">
-        <PlanTripTime saveDays={saveDays} savePeriod={savePeriod} />
+        <h3 style={{ textAlign: "center", margin: "1rem 0" }}>선택목록</h3>
+        <div
+          className="leftPlanSide__pickLocal__type__container"
+          onClick={toggleBtn}>
+          <span
+            className="leftPlanSide__pickLocal__type-btn sukbak"
+            onClick={() => {
+              setWhosModal(true);
+            }}>
+            숙박
+          </span>
+          <span
+            className="leftPlanSide__pickLocal__type-btn jangso lps__type-btn-picked"
+            onClick={() => {
+              setWhosModal(false);
+            }}>
+            장소
+          </span>
+        </div>
+        {whosModal ? <SukSoMadal saveDays={saveDays} /> : <JangSoModal />}
       </div>
-
-      <h3 style={{ textAlign: "center", margin: "1rem 0" }}>선택목록</h3>
-      <div
-        className="leftPlanSide__pickLocal__type__container"
-        onClick={toggleBtn}>
-        <span
-          className="leftPlanSide__pickLocal__type-btn sukbak"
-          onClick={() => {
-            setWhosModal(true);
-          }}>
-          숙박
-        </span>
-        <span
-          className="leftPlanSide__pickLocal__type-btn jangso lps__type-btn-picked"
-          onClick={() => {
-            setWhosModal(false);
-          }}>
-          장소
-        </span>
-      </div>
-      {whosModal ? <SukSoMadal /> : <JangSoModal />}
     </div>
   );
 };
@@ -134,7 +131,8 @@ function JangSoModal() {
   );
 }
 
-function SukSoMadal({ index }) {
+function SukSoMadal({ saveDays }) {
+  let arr = new Array(saveDays + 1).fill(0);
   return (
     <div className="suksoModal__container">
       <div className="suksoModal__counter__container">
@@ -145,7 +143,9 @@ function SukSoMadal({ index }) {
         <span>숙소는 일정의 시작 지점과 종료 지점으로 설정됩니다.</span>
         <span> 마지막 날은 시작 지점으로만 설정됩니다.</span>
       </div>
-      <SukSoSubModal index={index + 1} />;
+      {arr.map((val, index) => {
+        return <SukSoSubModal index={index} />;
+      })}
     </div>
   );
 }
@@ -153,7 +153,7 @@ function SukSoMadal({ index }) {
 function SukSoSubModal({ index }) {
   return (
     <div className="sukSoSubModal__container">
-      <div className="sukSoSubModal__dayBtn">DAY 1</div>
+      <div className="sukSoSubModal__dayBtn">DAY {index}</div>
       <div className="suksoModal__desc">
         <span>일자버튼을 누르고 숙소를 추가하세요</span>
         <FontAwesomeIcon icon={faPlus} className="sukSoSubModal__plus-btn" />
@@ -163,7 +163,7 @@ function SukSoSubModal({ index }) {
 }
 
 function toggleBtn(e) {
-  if (e.target.nodeName == "SPAN") {
+  if (e.target.nodeName === "SPAN") {
     if (e.target.classList.contains("sukbak")) {
       e.target.nextElementSibling.classList.remove("lps__type-btn-picked");
       e.target.classList.add("lps__type-btn-picked");
