@@ -10,9 +10,9 @@ import {
   BodyLim,
   ImgLim,
 } from "../Modal/localInfoModal.js";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 //redux에서 localNameForMarker(마커찍기위한 장소이름) 변경함수
-import { changeLnfM } from "../../redux/local.js";
+import { addJangso, changeLnfM, deleteArrInJangso } from "../../redux/store.js";
 const SearchedLocation = ({ local }) => {
   const [locaInfoModal, setLocaInfoModal] = useState(false);
   //redux test중...
@@ -45,7 +45,14 @@ const SearchedLocation = ({ local }) => {
               className="searchedLocation__i"
               onClick={() => setLocaInfoModal(true)}
             />
-            <FontAwesomeIcon icon={faPlus} className="searchedLocation__i" />
+            <FontAwesomeIcon
+              icon={faPlus}
+              className="searchedLocation__i"
+              onClick={() => {
+                dispatch(deleteArrInJangso(local));
+                dispatch(addJangso(local));
+              }}
+            />
           </div>
         </div>
       </div>
