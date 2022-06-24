@@ -4,8 +4,8 @@ import Navbar from "./components/Navbar/Navbar";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home.js";
 import { useEffect, useState } from "react";
-import WholeMap from "./components/WholeMap/WholeMap";
-import MainPage from "./components/MainPage/MainPage";
+import WholeMap from "./pages/WholeMap.js";
+import MainPage from "./pages/MainPage/MainPage";
 import Login from "./components/Login/Login";
 import Test from "./Test";
 
