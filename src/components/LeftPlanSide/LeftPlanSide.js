@@ -1,11 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./LeftPlanSide.css";
 import WholeMapLocalData from "../WholeMap/WholeMapLocalData.js";
 import DateRangePick from "../DateRangePicker/DateRangePicker2";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { PlanTripTime } from "../PlanTripTime/PlanTripTime";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faX } from "@fortawesome/free-solid-svg-icons";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { useDispatch } from "react-redux";
+import {
+  addArrInForJangso,
+  deleteAllPickJanso,
+  deletePickJangso,
+  minSetter,
+  timeSetter,
+} from "../../redux/store";
 
 const LeftPlanSide = ({ currPosition }) => {
   const [findcurrPositionId, setFindcurrPositionId] = useState("");
@@ -114,18 +123,133 @@ const ChangeDate = ({ period, appearCalendar, setAppearCalendar }) => {
 };
 
 function JangSoModal() {
+  let reduxState = useSelector((state) => {
+    return state;
+  });
+  let dispatch = useDispatch();
   return (
     <div className="jangSoModal__container">
       <div className="jangSoModal__counter__container">
-        <span className="jangSoModal__counter">0</span>
-        <span>(총0시간0분)</span>
+        <span className="jangSoModal__counter">
+          {reduxState.arrForPickJangso.length}
+        </span>
+        <span>
+          (총{reduxState.leftSideTimeSetter}시간{reduxState.leftSideMinSetter}
+          분)
+        </span>
       </div>
-      <div className="jangSoModal__allDel-btn">장소전체삭제</div>
-      <div className="jangSoModal__desc">
-        <span>가고 싶은 장소들을 검색하여 추가해주세요</span>
-        <span> 설정하신 일자별 여행시간내에서</span>
-        <span> 하루 평균 최대 8개의 장소까지 선택 가능합니다</span>
-        <FontAwesomeIcon icon={faPlus} className="jangSoModal__plus-btn" />
+      <div
+        className="jangSoModal__allDel-btn"
+        onClick={() => {
+          dispatch(deleteAllPickJanso([]));
+        }}>
+        장소전체삭제
+      </div>
+      {reduxState.arrForPickJangso.length !== 0 ? (
+        <div className="jangSoModal__pickedJangso__container">
+          {reduxState.arrForPickJangso.map((local, index) => {
+            return <PickedLocation local={local} />;
+          })}
+        </div>
+      ) : (
+        <div className="jangSoModal__desc">
+          <span>가고 싶은 장소들을 검색하여 추가해주세요</span>
+          <span> 설정하신 일자별 여행시간내에서</span>
+          <span> 하루 평균 최대 8개의 장소까지 선택 가능합니다</span>
+          <FontAwesomeIcon icon={faPlus} className="jangSoModal__plus-btn" />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PickedLocation({ local }) {
+  let [timeVal, setTimeVal] = useState(2);
+  let [minVal, setMinVal] = useState(0);
+  let dispatch = useDispatch();
+  let arrForPickJangso = useSelector((state) => {
+    return state.arrForPickJangso;
+  });
+  let reff = useRef();
+  useEffect(() => {
+    reff.current.classList.add("slide-in-right");
+    dispatch(timeSetter(2));
+  }, [arrForPickJangso]);
+
+  return (
+    <div className="pickedLocation__container" ref={reff}>
+      <div className="pickedLocation__img-container">
+        <img
+          src="/images/bg1.png"
+          onError={(e) => {
+            e.target.src = "/images/no-image.jpg";
+          }}
+        />
+      </div>
+      <div className="pickedLocation__info-container">
+        <div className="pickedLocation__info-title">
+          <h4>{local}</h4>
+          <FontAwesomeIcon
+            icon={faX}
+            className="pickedLocation__info-title__closeBtn"
+            onClick={() => {
+              dispatch(deletePickJangso(local));
+              dispatch(addArrInForJangso(local));
+              reff.current.classList.remove("slide-in-right");
+            }}
+          />
+        </div>
+        <div className="pickedLocation__time-container">
+          <FontAwesomeIcon icon={faClock} style={{ marginRight: "3px" }} />
+          <input
+            type="number"
+            name={1}
+            min={0}
+            max={24}
+            maxLength={5}
+            defaultValue={timeVal}
+            style={{ width: "40px", fontSize: "20px", color: "var(--orange)" }}
+            onClick={(e) => {
+              if (e.target.value !== 0) {
+                if (timeVal > e.target.value) dispatch(timeSetter(-1));
+                else dispatch(timeSetter(1));
+                setTimeVal(e.target.value);
+              }
+            }}
+            onKeyUp={(e) => {
+              if (e.code === "Enter") {
+                if (timeVal > e.target.value)
+                  dispatch(timeSetter(e.target.value - timeVal));
+                else dispatch(timeSetter(e.target.value - timeVal));
+                setTimeVal(e.target.value);
+              }
+            }}
+          />
+          <span style={{ fontSize: "13px" }}>시간</span>
+          <input
+            type="number"
+            min={0}
+            max={59}
+            style={{ width: "40px", fontSize: "20px", color: "var(--orange)" }}
+            defaultValue={minVal}
+            onClick={(e) => {
+              if (e.target.value !== 0) {
+                if (minVal > e.target.value) dispatch(minSetter(-1));
+                else dispatch(minSetter(1));
+                setMinVal(e.target.value);
+              }
+            }}
+            onKeyUp={(e) => {
+              if (e.code === "Enter") {
+                if (minVal > e.target.value)
+                  dispatch(minSetter(e.target.value - minVal));
+                else dispatch(minSetter(e.target.value - minVal));
+                setMinVal(e.target.value);
+              }
+            }}
+          />
+          <span style={{ fontSize: "13px" }}>분</span>
+        </div>
       </div>
     </div>
   );
@@ -173,4 +297,5 @@ function toggleBtn(e) {
     }
   }
 }
+
 export default LeftPlanSide;
