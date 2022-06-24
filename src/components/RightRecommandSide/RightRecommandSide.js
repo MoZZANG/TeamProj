@@ -4,12 +4,13 @@ import {
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Search from "../Search/Search";
 import SearchedLocation from "../SearchedLocation/SearchedLocation";
 import "./RightRecommandSide.css";
 import { changeInfo } from "../../redux/store";
+import SearchedSukso from "../SearchedLocation/SearchedSukso";
 const RightRecommandSide = ({ titleName, setTitleName }) => {
   let state = useSelector((state) => {
     return state;
@@ -40,7 +41,6 @@ const RightRecommandSide = ({ titleName, setTitleName }) => {
           onClick={(e) => {
             toggleBtn(e);
             setTitleName("장소");
-
             dispatch(changeInfo("장소"));
           }}>
           <FontAwesomeIcon
@@ -94,7 +94,7 @@ function RightSideInfo({ kindOfInfo, arrForJangso, arrForSukso }) {
       return (
         <>
           {arrForSukso.map((local, index) => {
-            return <SearchedLocation key={index} local={local} />;
+            return <SearchedSukso key={index} local={local} />;
           })}
         </>
       );
