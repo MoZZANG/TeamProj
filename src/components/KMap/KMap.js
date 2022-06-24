@@ -94,7 +94,7 @@ const KMap = ({ currPosition, setTitleName }) => {
     kakao.maps.event.addListener(marker, "click", function () {
       infowindow.open(map, marker);
     });
-  }, [lat, lng, reduxState]);
+  }, [lat, lng, reduxState.localNameForMarker]);
 
   return (
     <div>
