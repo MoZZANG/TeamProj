@@ -1,6 +1,7 @@
 .SearchedLocation{
   width: 100%;
   height: 100px;
+  transition: all .4s ease;
 }
 
 .searchedLocation__container{
@@ -34,6 +35,11 @@ cursor: pointer;
 .searchedLocation__info__content .searchedLocation__i:first-child{
   color: rgba(0, 0, 0, 0.4);
 }
+
+.searchedLocation__fadeOut{
+  animation: slide-out-left 0.3s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
 
 .searchedLocation__img-container{
   width: 30%;
@@ -121,4 +127,15 @@ position: absolute;
 width: 100%;
 height: 100%;
 border-radius: 15px;
+}
+
+@keyframes slide-out-left {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
 }
