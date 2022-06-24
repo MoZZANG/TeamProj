@@ -12,14 +12,20 @@ import {
 } from "../Modal/localInfoModal.js";
 import { useDispatch } from "react-redux";
 //redux에서 localNameForMarker(마커찍기위한 장소이름) 변경함수
-import { addJangso, changeLnfM, deleteArrInJangso } from "../../redux/store.js";
+import {
+  addPickJangso,
+  changeLnfM,
+  deleteArrInJangso,
+} from "../../redux/store.js";
 const SearchedLocation = ({ local }) => {
   const [locaInfoModal, setLocaInfoModal] = useState(false);
   //redux test중...
   let dispatch = useDispatch();
   let localNameRef = useRef();
+  let localContainer = useRef();
   return (
     <div
+      ref={localContainer}
       className="SearchedLocation"
       onClick={() => {
         //redux 변경 함수
@@ -29,6 +35,7 @@ const SearchedLocation = ({ local }) => {
         <LocalInfoModal
           locaInfoModal={locaInfoModal}
           setLocaInfoModal={setLocaInfoModal}
+          local={local}
         />
       )}
       <div className="searchedLocation__container">
@@ -43,14 +50,26 @@ const SearchedLocation = ({ local }) => {
             <FontAwesomeIcon
               icon={faCircleInfo}
               className="searchedLocation__i"
-              onClick={() => setLocaInfoModal(true)}
+              onClick={() => {
+                setLocaInfoModal(true);
+                console.log(localContainer.current);
+              }}
             />
             <FontAwesomeIcon
               icon={faPlus}
               className="searchedLocation__i"
-              onClick={() => {
-                dispatch(deleteArrInJangso(local));
-                dispatch(addJangso(local));
+              onClick={(e) => {
+                e.stopPropagation();
+                localContainer.current.classList.add(
+                  "searchedLocation__fadeOut"
+                );
+                setTimeout(() => {
+                  dispatch(addPickJangso(local));
+                  dispatch(deleteArrInJangso(local));
+                  localContainer.current.classList.remove(
+                    "searchedLocation__fadeOut"
+                  );
+                }, 350);
               }}
             />
           </div>
@@ -60,7 +79,7 @@ const SearchedLocation = ({ local }) => {
   );
 };
 
-function LocalInfoModal({ locaInfoModal, setLocaInfoModal }) {
+function LocalInfoModal({ locaInfoModal, setLocaInfoModal, local }) {
   return (
     <ContainerLim>
       <OverlayLim onClick={() => setLocaInfoModal(!locaInfoModal)} />
@@ -68,7 +87,7 @@ function LocalInfoModal({ locaInfoModal, setLocaInfoModal }) {
         <CloseLim onClick={() => setLocaInfoModal(!locaInfoModal)}>X</CloseLim>
         <ImgLim></ImgLim>
         <BodyLim>
-          <h4>장소이름</h4>
+          <h4>{local}</h4>
           <div className="localInfo__container">
             <div className="localInfo">
               <ul className="localInfo-ul">
@@ -132,4 +151,5 @@ function LocalInfoModal({ locaInfoModal, setLocaInfoModal }) {
     </ContainerLim>
   );
 }
+
 export default SearchedLocation;
