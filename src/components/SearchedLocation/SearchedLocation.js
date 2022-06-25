@@ -1,6 +1,6 @@
 import { faCircleInfo, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./SearchedLocation.css";
 import {
   ContainerLim,
@@ -10,15 +10,19 @@ import {
   BodyLim,
   ImgLim,
 } from "../Modal/localInfoModal.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //redux에서 localNameForMarker(마커찍기위한 장소이름) 변경함수
 import {
   addPickJangso,
   changeLnfM,
   deleteArrInJangso,
+  timeSetter,
 } from "../../redux/store.js";
 const SearchedLocation = ({ local }) => {
   const [locaInfoModal, setLocaInfoModal] = useState(false);
+  let arrForJangso = useSelector((state) => {
+    return state.arrForJangso;
+  });
   //redux test중...
   let dispatch = useDispatch();
   let localNameRef = useRef();
@@ -52,7 +56,6 @@ const SearchedLocation = ({ local }) => {
               className="searchedLocation__i"
               onClick={() => {
                 setLocaInfoModal(true);
-                console.log(localContainer.current);
               }}
             />
             <FontAwesomeIcon
@@ -63,13 +66,14 @@ const SearchedLocation = ({ local }) => {
                 localContainer.current.classList.add(
                   "searchedLocation__fadeOut"
                 );
+                dispatch(timeSetter(2));
                 setTimeout(() => {
                   dispatch(addPickJangso(local));
                   dispatch(deleteArrInJangso(local));
                   localContainer.current.classList.remove(
                     "searchedLocation__fadeOut"
                   );
-                }, 350);
+                }, 400);
               }}
             />
           </div>
