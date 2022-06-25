@@ -104,9 +104,12 @@ let leftSideTimeSetter = createSlice({
     timeSetter(state, action) {
       return state + action.payload;
     },
+    setInitForTime(state, action) {
+      return action.payload;
+    },
   },
 });
-export let { timeSetter } = leftSideTimeSetter.actions;
+export let { timeSetter, setInitForTime } = leftSideTimeSetter.actions;
 
 //왼쪽 minutes state관리
 let leftSideMinSetter = createSlice({
@@ -116,9 +119,42 @@ let leftSideMinSetter = createSlice({
     minSetter(state, action) {
       return state + action.payload;
     },
+    setInitForMin(state, action) {
+      return action.payload;
+    },
   },
 });
-export let { minSetter } = leftSideMinSetter.actions;
+export let { minSetter, setInitForMin } = leftSideMinSetter.actions;
+
+//추천장소or추천숙소 선택시 버튼선택용
+// let rightToggle = createSlice({
+//   name: "rightToggle",
+//   initialState: null,
+//   reducer: {
+//     changeRightToggle(state, action) {
+//       return (
+//         state.classList.remove("rps__type-btn-picked"),
+//         action.payload.classList.add("rps__type-btn-picked")
+//       );
+//     },
+//   },
+// });
+// export let { changeRightToggle } = rightToggle.actions;
+
+let saveDaysRedux = createSlice({
+  name: "saveDaysRedux",
+  initialState: [],
+  reducers: {
+    changeSaveDaysRedux(state, action) {
+      return new Array(action.payload).fill(0);
+    },
+    changeAllSaveDaysRedux(state, action) {
+      return action.payload;
+    },
+  },
+});
+export let { changeSaveDaysRedux, changeAllSaveDaysRedux } =
+  saveDaysRedux.actions;
 
 export default configureStore({
   reducer: {
@@ -130,5 +166,7 @@ export default configureStore({
     arrForPickSukso: arrForPickSukso.reducer,
     leftSideTimeSetter: leftSideTimeSetter.reducer,
     leftSideMinSetter: leftSideMinSetter.reducer,
+    // rightToggle: rightToggle.reducer,
+    saveDaysRedux: saveDaysRedux.reducer,
   },
 });
