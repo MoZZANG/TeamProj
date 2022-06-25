@@ -10,9 +10,14 @@ import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { useDispatch } from "react-redux";
 import {
   addArrInForJangso,
+  addPickSukso,
+  changeAllSaveDaysRedux,
+  changeSaveDaysRedux,
   deleteAllPickJanso,
   deletePickJangso,
   minSetter,
+  setInitForMin,
+  setInitForTime,
   timeSetter,
 } from "../../redux/store";
 
@@ -45,6 +50,7 @@ const LeftPlanSide = ({ currPosition }) => {
     setFindcurrPositionId(findId.id);
     setAppearCalendar(true);
   }, []);
+  let dispatch = useDispatch();
   return (
     <div className="LeftPlanSide">
       <div className="leftPlanSide__localNDay">
@@ -88,6 +94,10 @@ const LeftPlanSide = ({ currPosition }) => {
             className="leftPlanSide__pickLocal__type-btn sukbak"
             onClick={() => {
               setWhosModal(true);
+              let tempSaveDays = [...reduxState.saveDaysRedux];
+              tempSaveDays.splice(0, reduxState.arrForPickSukso.length);
+              let finalArr = reduxState.arrForPickSukso.concat(tempSaveDays);
+              dispatch(changeAllSaveDaysRedux(finalArr));
             }}>
             숙박
           </span>
@@ -141,7 +151,14 @@ function JangSoModal() {
       <div
         className="jangSoModal__allDel-btn"
         onClick={() => {
+          {
+            reduxState.arrForPickJangso.map((local, index) => {
+              dispatch(addArrInForJangso(local));
+            });
+          }
           dispatch(deleteAllPickJanso([]));
+          dispatch(setInitForTime(0));
+          dispatch(setInitForMin(0));
         }}>
         장소전체삭제
       </div>
@@ -173,7 +190,6 @@ function PickedLocation({ local }) {
   let reff = useRef();
   useEffect(() => {
     reff.current.classList.add("slide-in-right");
-    dispatch(timeSetter(2));
   }, [arrForPickJangso]);
 
   return (
@@ -193,9 +209,14 @@ function PickedLocation({ local }) {
             icon={faX}
             className="pickedLocation__info-title__closeBtn"
             onClick={() => {
-              dispatch(deletePickJangso(local));
-              dispatch(addArrInForJangso(local));
+              // reff.current.classList.add("slide-out-right");
               reff.current.classList.remove("slide-in-right");
+              setTimeout(() => {
+                dispatch(deletePickJangso(local));
+                dispatch(timeSetter(-2));
+                dispatch(addArrInForJangso(local));
+                reff.current.classList.remove("slide-in-right");
+              }, 300);
             }}
           />
         </div>
@@ -235,7 +256,7 @@ function PickedLocation({ local }) {
             onClick={(e) => {
               if (e.target.value !== 0) {
                 if (minVal > e.target.value) dispatch(minSetter(-1));
-                else dispatch(minSetter(1));
+                else if (minVal < e.target.value) dispatch(minSetter(1));
                 setMinVal(e.target.value);
               }
             }}
@@ -256,7 +277,14 @@ function PickedLocation({ local }) {
 }
 
 function SukSoMadal({ saveDays }) {
+  let reduxState = useSelector((state) => {
+    return state;
+  });
+
+  let dispatch = useDispatch();
   let arr = new Array(saveDays + 1).fill(0);
+  // console.log("reduxState.saveDaysRedux:", reduxState.saveDaysRedux);
+
   return (
     <div className="suksoModal__container">
       <div className="suksoModal__counter__container">
@@ -267,21 +295,25 @@ function SukSoMadal({ saveDays }) {
         <span>숙소는 일정의 시작 지점과 종료 지점으로 설정됩니다.</span>
         <span> 마지막 날은 시작 지점으로만 설정됩니다.</span>
       </div>
-      {arr.map((val, index) => {
-        return <SukSoSubModal index={index} />;
+      {reduxState.saveDaysRedux.map((local, index) => {
+        return <SukSoSubModal index={index} local={local} />;
       })}
     </div>
   );
 }
 
-function SukSoSubModal({ index }) {
+function SukSoSubModal({ index, local }) {
   return (
     <div className="sukSoSubModal__container">
-      <div className="sukSoSubModal__dayBtn">DAY {index}</div>
-      <div className="suksoModal__desc">
-        <span>일자버튼을 누르고 숙소를 추가하세요</span>
-        <FontAwesomeIcon icon={faPlus} className="sukSoSubModal__plus-btn" />
-      </div>
+      <div className="sukSoSubModal__dayBtn">DAY {index + 1}</div>
+      {local !== 0 ? (
+        local
+      ) : (
+        <div className={`suksoModal__desc ${index + 1}`}>
+          <span>일자버튼을 누르고 숙소를 추가하세요</span>
+          <FontAwesomeIcon icon={faPlus} className="sukSoSubModal__plus-btn" />
+        </div>
+      )}
     </div>
   );
 }
