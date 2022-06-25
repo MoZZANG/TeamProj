@@ -4,18 +4,23 @@ import {
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Search from "../Search/Search";
 import SearchedLocation from "../SearchedLocation/SearchedLocation";
 import "./RightRecommandSide.css";
-import { changeInfo } from "../../redux/store";
+import { changeInfo, changeRightToggle } from "../../redux/store";
 import SearchedSukso from "../SearchedLocation/SearchedSukso";
 const RightRecommandSide = ({ titleName, setTitleName }) => {
   let state = useSelector((state) => {
     return state;
   });
   let dispatch = useDispatch();
+  //추천숙소선택시 숙소버튼선택용
+  let suksoRef = useRef();
+  //추천장소선택시 장소버튼선택용
+  let jangsoRef = useRef();
+
   return (
     <div className="RightRecommandSide">
       <div>
@@ -23,6 +28,7 @@ const RightRecommandSide = ({ titleName, setTitleName }) => {
       </div>
       <div className="rightRecommandSide__span__container">
         <span
+          ref={suksoRef}
           className="rightRecommandSide__span sukbak"
           onClick={(e) => {
             toggleBtn(e);
@@ -37,6 +43,7 @@ const RightRecommandSide = ({ titleName, setTitleName }) => {
           숙소
         </span>
         <span
+          ref={jangsoRef}
           className="rightRecommandSide__span jangso rps__type-btn-picked"
           onClick={(e) => {
             toggleBtn(e);
@@ -56,11 +63,13 @@ const RightRecommandSide = ({ titleName, setTitleName }) => {
         <div className="rightSideTitle">
           <RightSideTitle titleName={titleName} />
         </div>
-        <RightSideInfo
-          kindOfInfo={state.kindOfInfo}
-          arrForJangso={state.arrForJangso}
-          arrForSukso={state.arrForSukso}
-        />
+        <div className="rightSideInfo">
+          <RightSideInfo
+            kindOfInfo={state.kindOfInfo}
+            arrForJangso={state.arrForJangso}
+            arrForSukso={state.arrForSukso}
+          />
+        </div>
       </div>
     </div>
   );
