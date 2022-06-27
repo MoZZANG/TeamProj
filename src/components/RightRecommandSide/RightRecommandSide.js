@@ -11,8 +11,8 @@ import SearchedLocation from "../SearchedLocation/SearchedLocation";
 import "./RightRecommandSide.css";
 import { changeInfo, changeRightToggle } from "../../redux/store";
 import SearchedSukso from "../SearchedLocation/SearchedSukso";
-const RightRecommandSide = ({ titleName, setTitleName }) => {
-  let state = useSelector((state) => {
+const RightRecommandSide = ({ titleName, setTitleName, conWhichModal }) => {
+  let reduxState = useSelector((state) => {
     return state;
   });
   let dispatch = useDispatch();
@@ -20,7 +20,15 @@ const RightRecommandSide = ({ titleName, setTitleName }) => {
   let suksoRef = useRef();
   //추천장소선택시 장소버튼선택용
   let jangsoRef = useRef();
-
+  useEffect(() => {
+    if (conWhichModal === true) {
+      suksoRef.current.classList.add("rps__type-btn-picked");
+      jangsoRef.current.classList.remove("rps__type-btn-picked");
+    } else {
+      suksoRef.current.classList.remove("rps__type-btn-picked");
+      jangsoRef.current.classList.add("rps__type-btn-picked");
+    }
+  }, [conWhichModal]);
   return (
     <div className="RightRecommandSide">
       <div>
@@ -65,9 +73,9 @@ const RightRecommandSide = ({ titleName, setTitleName }) => {
         </div>
         <div className="rightSideInfo">
           <RightSideInfo
-            kindOfInfo={state.kindOfInfo}
-            arrForJangso={state.arrForJangso}
-            arrForSukso={state.arrForSukso}
+            kindOfInfo={reduxState.kindOfInfo}
+            arrForJangso={reduxState.arrForJangso}
+            arrForSukso={reduxState.arrForSukso}
           />
         </div>
       </div>
@@ -103,7 +111,7 @@ function RightSideInfo({ kindOfInfo, arrForJangso, arrForSukso }) {
       return (
         <>
           {arrForSukso.map((local, index) => {
-            return <SearchedSukso key={index} local={local} />;
+            return <SearchedSukso key={index} local={local} index={index} />;
           })}
         </>
       );
