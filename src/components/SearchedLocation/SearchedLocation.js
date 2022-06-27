@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addPickJangso,
   changeLnfM,
+  changeShowWhichModal,
   deleteArrInJangso,
   timeSetter,
 } from "../../redux/store.js";
@@ -67,13 +68,9 @@ const SearchedLocation = ({ local }) => {
                   "searchedLocation__fadeOut"
                 );
                 dispatch(timeSetter(2));
-                setTimeout(() => {
-                  dispatch(addPickJangso(local));
-                  dispatch(deleteArrInJangso(local));
-                  localContainer.current.classList.remove(
-                    "searchedLocation__fadeOut"
-                  );
-                }, 400);
+                dispatch(addPickJangso(local));
+                dispatch(deleteArrInJangso(local));
+                dispatch(changeShowWhichModal(false));
               }}
             />
           </div>
