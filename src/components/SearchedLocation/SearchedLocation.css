@@ -42,6 +42,7 @@ cursor: pointer;
 
 
 .searchedLocation__img-container{
+  position: relative;
   width: 30%;
   height: 100%;
   overflow: hidden;
@@ -133,6 +134,15 @@ border-radius: 15px;
 	animation: slide-in-left 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards;
 }
 
+.badge{
+  position: absolute;
+  padding: 1px;
+  background: red;
+  border-radius: 3px;
+  font-size: 10px;
+  color: white;
+  font-weight: bold;
+}
 
 @keyframes slide-out-left {
   0% {
