@@ -10,11 +10,12 @@ import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { useDispatch } from "react-redux";
 import {
   addArrInForJangso,
-  addPickSukso,
-  changeAllSaveDaysRedux,
   changeSaveDaysRedux,
+  changeShowWhichModal,
+  delAllSaveDaysRedux,
   deleteAllPickJanso,
   deletePickJangso,
+  delOneSaveDaysRedux,
   minSetter,
   setInitForMin,
   setInitForTime,
@@ -39,7 +40,8 @@ const LeftPlanSide = ({ currPosition }) => {
   let reduxState = useSelector((state) => {
     return state;
   });
-  const [whosModal, setWhosModal] = useState(false);
+  let suksoRef = useRef();
+  let jangsoRef = useRef();
   useEffect(() => {
     //WholeMapLocalData.js에서 현재클릭해서 들어온 지역명과 같은 지역명 찾기
     let findId = WholeMapLocalData.find((data) => {
@@ -50,6 +52,15 @@ const LeftPlanSide = ({ currPosition }) => {
     setFindcurrPositionId(findId.id);
     setAppearCalendar(true);
   }, []);
+  useEffect(() => {
+    if (reduxState.showWhichModal === true) {
+      suksoRef.current.classList.add("lps__type-btn-picked");
+      jangsoRef.current.classList.remove("lps__type-btn-picked");
+    } else {
+      suksoRef.current.classList.remove("lps__type-btn-picked");
+      jangsoRef.current.classList.add("lps__type-btn-picked");
+    }
+  }, [reduxState.showWhichModal]);
   let dispatch = useDispatch();
   return (
     <div className="LeftPlanSide">
@@ -92,24 +103,22 @@ const LeftPlanSide = ({ currPosition }) => {
           onClick={toggleBtn}>
           <span
             className="leftPlanSide__pickLocal__type-btn sukbak"
+            ref={suksoRef}
             onClick={() => {
-              setWhosModal(true);
-              let tempSaveDays = [...reduxState.saveDaysRedux];
-              tempSaveDays.splice(0, reduxState.arrForPickSukso.length);
-              let finalArr = reduxState.arrForPickSukso.concat(tempSaveDays);
-              dispatch(changeAllSaveDaysRedux(finalArr));
+              dispatch(changeShowWhichModal(true));
             }}>
-            숙박
+            숙소
           </span>
           <span
             className="leftPlanSide__pickLocal__type-btn jangso lps__type-btn-picked"
+            ref={jangsoRef}
             onClick={() => {
-              setWhosModal(false);
+              dispatch(changeShowWhichModal(false));
             }}>
             장소
           </span>
         </div>
-        {whosModal ? <SukSoMadal saveDays={saveDays} /> : <JangSoModal />}
+        {reduxState.showWhichModal ? <SukSoMadal /> : <JangSoModal />}
       </div>
     </div>
   );
@@ -137,6 +146,7 @@ function JangSoModal() {
     return state;
   });
   let dispatch = useDispatch();
+
   return (
     <div className="jangSoModal__container">
       <div className="jangSoModal__counter__container">
@@ -165,7 +175,7 @@ function JangSoModal() {
       {reduxState.arrForPickJangso.length !== 0 ? (
         <div className="jangSoModal__pickedJangso__container">
           {reduxState.arrForPickJangso.map((local, index) => {
-            return <PickedLocation local={local} />;
+            return <PickedLocation local={local} key={index} />;
           })}
         </div>
       ) : (
@@ -184,16 +194,8 @@ function PickedLocation({ local }) {
   let [timeVal, setTimeVal] = useState(2);
   let [minVal, setMinVal] = useState(0);
   let dispatch = useDispatch();
-  let arrForPickJangso = useSelector((state) => {
-    return state.arrForPickJangso;
-  });
-  let reff = useRef();
-  useEffect(() => {
-    reff.current.classList.add("slide-in-right");
-  }, [arrForPickJangso]);
-
   return (
-    <div className="pickedLocation__container" ref={reff}>
+    <div className="pickedLocation__container slide-in-right">
       <div className="pickedLocation__img-container">
         <img
           src="/images/bg1.png"
@@ -209,14 +211,9 @@ function PickedLocation({ local }) {
             icon={faX}
             className="pickedLocation__info-title__closeBtn"
             onClick={() => {
-              // reff.current.classList.add("slide-out-right");
-              reff.current.classList.remove("slide-in-right");
-              setTimeout(() => {
-                dispatch(deletePickJangso(local));
-                dispatch(timeSetter(-2));
-                dispatch(addArrInForJangso(local));
-                reff.current.classList.remove("slide-in-right");
-              }, 300);
+              dispatch(deletePickJangso(local));
+              dispatch(timeSetter(-2));
+              dispatch(addArrInForJangso(local));
             }}
           />
         </div>
@@ -276,27 +273,32 @@ function PickedLocation({ local }) {
   );
 }
 
-function SukSoMadal({ saveDays }) {
+function SukSoMadal() {
   let reduxState = useSelector((state) => {
     return state;
   });
-
   let dispatch = useDispatch();
-  let arr = new Array(saveDays + 1).fill(0);
-  // console.log("reduxState.saveDaysRedux:", reduxState.saveDaysRedux);
 
   return (
     <div className="suksoModal__container">
       <div className="suksoModal__counter__container">
         <span className="suksoModal__counter">0</span>
       </div>
-      <div className="suksoModal__allDel-btn">숙소전체삭제</div>
+      <div
+        className="suksoModal__allDel-btn"
+        onClick={() => {
+          dispatch(
+            changeSaveDaysRedux(reduxState.saveDaysNPickedSuksoRedux.length)
+          );
+        }}>
+        숙소전체삭제
+      </div>
       <div className="suksoModal__desc">
         <span>숙소는 일정의 시작 지점과 종료 지점으로 설정됩니다.</span>
         <span> 마지막 날은 시작 지점으로만 설정됩니다.</span>
       </div>
-      {reduxState.saveDaysRedux.map((local, index) => {
-        return <SukSoSubModal index={index} local={local} />;
+      {reduxState.saveDaysNPickedSuksoRedux.map((local, index) => {
+        return <SukSoSubModal index={index} local={local} key={index} />;
       })}
     </div>
   );
@@ -307,13 +309,46 @@ function SukSoSubModal({ index, local }) {
     <div className="sukSoSubModal__container">
       <div className="sukSoSubModal__dayBtn">DAY {index + 1}</div>
       {local !== 0 ? (
-        local
+        <PickedSukso local={local} />
       ) : (
         <div className={`suksoModal__desc ${index + 1}`}>
           <span>일자버튼을 누르고 숙소를 추가하세요</span>
           <FontAwesomeIcon icon={faPlus} className="sukSoSubModal__plus-btn" />
         </div>
       )}
+    </div>
+  );
+}
+
+function PickedSukso({ local }) {
+  let dispatch = useDispatch();
+  let reduxState = useSelector((state) => {
+    return state;
+  });
+
+  return (
+    <div className="pickedSukso__container slide-in-right">
+      <div className="pickedSukso__img-container">
+        <img
+          src="/images/bg1.png"
+          onError={(e) => {
+            e.target.src = "/images/no-image.jpg";
+          }}
+        />
+      </div>
+      <div className="pickedSukso__info-container">
+        <div className="pickedSukso__info-title">
+          <h4>{local}</h4>
+          <FontAwesomeIcon
+            icon={faX}
+            className="pickedSukso__info-title__closeBtn"
+            onClick={() => {
+              // dispatch(delOneArrForPickSukso(local));
+              dispatch(delOneSaveDaysRedux(local));
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 }
