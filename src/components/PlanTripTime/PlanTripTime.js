@@ -39,7 +39,7 @@ const PlanTripTime = ({ saveDays, savePeriod }) => {
         </div>
         <div className="planTripTime__modal" ref={reff}>
           {period.map((val, index) => {
-            return <TimeSet index={index + 1} />;
+            return <TimeSet index={index + 1} key={index} />;
           })}
         </div>
       </div>
