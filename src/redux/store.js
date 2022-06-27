@@ -84,17 +84,17 @@ let arrForSukso = createSlice({
 });
 export let { changeArrForSukso } = arrForJangso.actions;
 
-//추천숙소에서 선택한 숙소저장하는 배열
-let arrForPickSukso = createSlice({
-  name: "arrForPickSukso",
-  initialState: [],
+//숙소와 장소모달중 어떤 것을 보여줄지
+let showWhichModal = createSlice({
+  name: "showWhichModal",
+  initialState: false,
   reducers: {
-    addPickSukso(state, action) {
-      state = state.push(action.payload);
+    changeShowWhichModal(state, action) {
+      return action.payload;
     },
   },
 });
-export let { addPickSukso } = arrForPickSukso.actions;
+export let { changeShowWhichModal } = showWhichModal.actions;
 
 //왼쪽 time state관리
 let leftSideTimeSetter = createSlice({
@@ -141,20 +141,34 @@ export let { minSetter, setInitForMin } = leftSideMinSetter.actions;
 // });
 // export let { changeRightToggle } = rightToggle.actions;
 
-let saveDaysRedux = createSlice({
-  name: "saveDaysRedux",
+let saveDaysNPickedSuksoRedux = createSlice({
+  name: "saveDaysNPickedSuksoRedux",
   initialState: [],
   reducers: {
     changeSaveDaysRedux(state, action) {
       return new Array(action.payload).fill(0);
     },
-    changeAllSaveDaysRedux(state, action) {
+    changeArrSaveDaysRedux(state, action) {
       return action.payload;
+    },
+    addOneSaveDaysRedux(state, action) {
+      state = state.splice(state.indexOf(0), 1, action.payload);
+    },
+    delAllSaveDaysRedux(state, action) {
+      return action.payload;
+    },
+    delOneSaveDaysRedux(state, action) {
+      state = state.splice(state.indexOf(action.payload), 1, 0);
     },
   },
 });
-export let { changeSaveDaysRedux, changeAllSaveDaysRedux } =
-  saveDaysRedux.actions;
+export let {
+  changeSaveDaysRedux,
+  changeArrSaveDaysRedux,
+  addOneSaveDaysRedux,
+  delAllSaveDaysRedux,
+  delOneSaveDaysRedux,
+} = saveDaysNPickedSuksoRedux.actions;
 
 export default configureStore({
   reducer: {
@@ -163,10 +177,10 @@ export default configureStore({
     arrForJangso: arrForJangso.reducer,
     arrForSukso: arrForSukso.reducer,
     arrForPickJangso: arrForPickJangso.reducer,
-    arrForPickSukso: arrForPickSukso.reducer,
     leftSideTimeSetter: leftSideTimeSetter.reducer,
     leftSideMinSetter: leftSideMinSetter.reducer,
     // rightToggle: rightToggle.reducer,
-    saveDaysRedux: saveDaysRedux.reducer,
+    saveDaysNPickedSuksoRedux: saveDaysNPickedSuksoRedux.reducer,
+    showWhichModal: showWhichModal.reducer,
   },
 });
