@@ -6,7 +6,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import ko from "date-fns/locale/ko";
 import "./DateRangePicker.css";
 import { useDispatch } from "react-redux";
-import { changeSaveDaysRedux } from "../../redux/store";
+import { changeAllSaveDaysRedux, changeSaveDaysRedux } from "../../redux/store";
 const DateRangePick = ({
   setDays,
   setPeriod,
@@ -69,7 +69,7 @@ const DateRangePick = ({
               setPeriod(savePeriod);
               setDays(saveDays);
               setAppearCalendar(!appearCalendar);
-              dispatch(changeSaveDaysRedux(saveDays + 1));
+              dispatch(changeSaveDaysRedux(saveDays));
             }}>
             적용하기
           </div>
