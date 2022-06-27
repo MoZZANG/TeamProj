@@ -2,10 +2,10 @@ import "./KMap.css";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import "./KMap.css";
-import { changeInfo } from "../../redux/store";
+import { changeInfo, changeShowWhichModal } from "../../redux/store";
 const { kakao } = window;
 
-const KMap = ({ currPosition, setTitleName }) => {
+const KMap = ({ currPosition, setTitleName, setConWhichModal }) => {
   let [lat, setLat] = useState("");
   let [lng, setLng] = useState("");
   //searchedLacation클릭시 해당 장소이름으로 redux state변경하기 위함
@@ -110,6 +110,7 @@ const KMap = ({ currPosition, setTitleName }) => {
             onClick={() => {
               setTitleName("추천숙소");
               dispatch(changeInfo("추천숙소"));
+              setConWhichModal(true);
             }}>
             추천숙소
           </div>
@@ -117,6 +118,7 @@ const KMap = ({ currPosition, setTitleName }) => {
             onClick={() => {
               setTitleName("추천장소");
               dispatch(changeInfo("추천장소"));
+              setConWhichModal(false);
             }}>
             추천장소
           </div>
