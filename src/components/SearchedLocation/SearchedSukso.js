@@ -12,13 +12,20 @@ import {
 } from "../Modal/localInfoModal.js";
 import { useDispatch, useSelector } from "react-redux";
 //redux에서 localNameForMarker(마커찍기위한 장소이름) 변경함수
-import { addPickSukso, changeLnfM } from "../../redux/store.js";
-const SearchedSukso = ({ local }) => {
+import {
+  addOneSaveDaysRedux,
+  changeLnfM,
+  changeShowWhichModal,
+} from "../../redux/store.js";
+
+const SearchedSukso = ({ local, index }) => {
   const [locaInfoModal, setLocaInfoModal] = useState(false);
-  //redux test중...
+  const [showBadge, setShowBadge] = useState(false);
   let dispatch = useDispatch();
   let localNameRef = useRef();
-  let state = useSelector((state) => state);
+  let reduxState = useSelector((state) => {
+    return state;
+  });
   return (
     <div
       className="SearchedLocation"
@@ -34,6 +41,20 @@ const SearchedSukso = ({ local }) => {
       )}
       <div className="searchedLocation__container">
         <div className="searchedLocation__img-container">
+          {reduxState.saveDaysNPickedSuksoRedux.map((state, index) => {
+            if (state === local) {
+              console.log(reduxState.saveDaysNPickedSuksoRedux);
+              console.log(index);
+              return (
+                <PickedSuksoBadge index={index} local={local} key={index} />
+              );
+              // return reduxState.saveDaysNPickedSuksoRedux.map((sukso, i) => {
+              //   if (sukso !== 0)
+              //     return <PickedSuksoBadge index={i} local={local} key={i} />;
+              // });
+            }
+          })}
+
           <img src="/images/img-8.jpg" />
         </div>
         <div className="searchedLocation__info">
@@ -51,7 +72,8 @@ const SearchedSukso = ({ local }) => {
               className="searchedLocation__i"
               onClick={(e) => {
                 e.stopPropagation();
-                dispatch(addPickSukso(local));
+                dispatch(addOneSaveDaysRedux(local));
+                dispatch(changeShowWhichModal(true));
               }}
             />
           </div>
@@ -131,6 +153,14 @@ function LocalInfoModal({ locaInfoModal, setLocaInfoModal }) {
         </div>
       </ContentsLim>
     </ContainerLim>
+  );
+}
+
+function PickedSuksoBadge({ sukso, index }) {
+  return (
+    <div>
+      <span className="badge">Day{index + 1}</span>{" "}
+    </div>
   );
 }
 export default SearchedSukso;
